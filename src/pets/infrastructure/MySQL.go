@@ -56,7 +56,7 @@ func (mysql *MySQL) ViewAll() ([]entities.Pet, error) {
 	var pets []entities.Pet
 	for rows.Next() {
 		var pet entities.Pet
-		if err := rows.Scan(&pet.ID, &pet.Name, &pet.Raza); err != nil {
+		if err := rows.Scan(&pet.Id, &pet.Name, &pet.Raza); err != nil {
 			return nil, fmt.Errorf("error al escanear la fila: %w", err)
 		}
 		pets = append(pets, pet)
@@ -75,7 +75,7 @@ func (mysql *MySQL) ViewOne(id int) (*entities.Pet, error) {
 
 	var pet entities.Pet
 	if rows.Next() {
-		if err := rows.Scan(&pet.ID, &pet.Name, &pet.Raza); err != nil {
+		if err := rows.Scan(&pet.Id, &pet.Name, &pet.Raza); err != nil {
 			return nil, fmt.Errorf("error al escanear la fila: %w", err)
 		}
 	} else {

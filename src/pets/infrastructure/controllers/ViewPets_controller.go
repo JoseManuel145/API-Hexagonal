@@ -21,5 +21,8 @@ func (vpc *ViewPetsController) Run(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"pets": pets})
+	if pets == nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "No pets found"})
+	}
+	c.JSON(http.StatusOK, pets)
 }

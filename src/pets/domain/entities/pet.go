@@ -1,15 +1,15 @@
 package entities
 
 type Pet struct {
-	ID   int
-	Name string
-	Raza string
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+	Raza string `json:"raza"`
 }
 
 var increment = 0
 
 func NewPet(name, raza string) *Pet {
 	increment++
-	pet := Pet{ID: increment, Name: name, Raza: raza}
+	pet := Pet{Id: increment, Name: name, Raza: raza}
 	return &pet
 }

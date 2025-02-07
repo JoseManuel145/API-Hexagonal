@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"proyecto/src/pets/application"
+	"proyecto/src/pets/domain/entities"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,21 +17,19 @@ func NewSavePetController(useCase *application.SavePet) *CreatePetController {
 }
 
 func (cp *CreatePetController) Run(c *gin.Context) {
-	var json struct {
-		Name string `json:"name"`
-		Raza string `json:"raza"`
-	}
-
-	if err := c.ShouldBindJSON(&json); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	var pet entities.Pet
+	// Validar JSON y enlazar a la estructura
+	if err := c.ShouldBindJSON(&pet); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request: " + err.Error()})
 		return
 	}
-
-	err := cp.petSaver.Execute(json.Name, json.Raza)
+	// Guardar la mascota
+	err := cp.petSaver.Execute(pet.Name, pet.Raza)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save pet: " + err.Error()})
 		return
 	}
 
+	// Retornar la mascota creada
 	c.JSON(http.StatusCreated, gin.H{"message": "Pet saved successfully"})
 }
