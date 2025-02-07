@@ -39,9 +39,12 @@ func (mysql *MySQL) Delete(id int) error {
 
 	result, err := mysql.conn.ExecutePreparedQuery(query, id)
 	if err != nil {
-		return fmt.Errorf("error al ejecutar la consulta: %w", err)
-	}
+        return fmt.Errorf("error al ejecutar la consulta: %w", err)
+    }
 	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+        return fmt.Errorf("no se encontró ninguna mascota con el ID %d", id)
+    }
 	if rowsAffected == 1 {
 		log.Printf("[MySQL] - Filas afectadas: %d", rowsAffected)
 	}

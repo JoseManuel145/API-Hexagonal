@@ -24,6 +24,7 @@ func (vpc *ViewAccessoriesController) Run(c *gin.Context) {
 
 	if accessories == nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "No accessories found"})
+		return
 	}
 	c.JSON(http.StatusOK, accessories)
 }
