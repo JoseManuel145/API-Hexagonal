@@ -29,5 +29,5 @@ func (vpc *ViewAccessoryController) Run(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"Accessory": accessory})
+	c.JSON(http.StatusOK, accessory)
 }

@@ -12,6 +12,7 @@ func SetupAccessoryRoutes(
 	deleteAccessoryController *controllers.DeleteAccessoryController,
 	viewAccessoriesController *controllers.ViewAccessoriesController,
 	viewAccessoryController *controllers.ViewAccessoryController,
+	editAccessoryController *controllers.EditAccessoriesController,
 ) {
 	accessoryGroup := router.Group("/accessories")
 	{
@@ -19,5 +20,6 @@ func SetupAccessoryRoutes(
 		accessoryGroup.GET("", viewAccessoriesController.Run)
 		accessoryGroup.GET("/:id", viewAccessoryController.Run)
 		accessoryGroup.DELETE("/:id", deleteAccessoryController.Run)
+		accessoryGroup.PUT("/:id", editAccessoryController.Run)
 	}
 }

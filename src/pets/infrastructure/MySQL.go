@@ -39,13 +39,13 @@ func (mysql *MySQL) Delete(id int) error {
 
 	result, err := mysql.conn.ExecutePreparedQuery(query, id)
 	if err != nil {
-        return fmt.Errorf("error al ejecutar la consulta: %w", err)
-    }
-	
+		return fmt.Errorf("error al ejecutar la consulta: %w", err)
+	}
+
 	rowsAffected, _ := result.RowsAffected()
 	if rowsAffected == 0 {
-        return fmt.Errorf("no se encontró ninguna mascota con el ID %d", id)
-    }
+		return fmt.Errorf("no se encontró ninguna mascota con el ID %d", id)
+	}
 	if rowsAffected == 1 {
 		log.Printf("[MySQL] - Filas afectadas: %d", rowsAffected)
 	}
@@ -91,4 +91,19 @@ func (mysql *MySQL) ViewOne(id int) (*entities.Pet, error) {
 	}
 
 	return &pet, nil
+}
+func (mysql *MySQL) Edit(id int, name, raza string) error {
+	query := "UPDATE pets SET name = ?, raza = ? WHERE id = ?"
+
+	result, err := mysql.conn.ExecutePreparedQuery(query, name, raza, id)
+	if err != nil {
+		return fmt.Errorf("error al ejecutar la consulta: %w", err)
+	}
+	new_id := id
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		return fmt.Errorf("no se encontró ninguna mascota con el ID %d", new_id)
+	}
+
+	return nil
 }

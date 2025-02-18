@@ -1,7 +1,7 @@
 package entities
 
 type Pet struct {
-	Id   int    `json:"id"`
+	Id   int
 	Name string `json:"name"`
 	Raza string `json:"raza"`
 }

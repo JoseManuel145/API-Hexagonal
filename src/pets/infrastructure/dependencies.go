@@ -15,14 +15,16 @@ func InitPets(db *MySQL, router *gin.Engine) {
 	deletePet := application.NewDeletePet(db)
 	viewAllPets := application.NewViewPets(db)
 	viewPet := application.NewViewPet(db)
+	editPet := application.NewEditPet(db)
 
 	// Instanciar controladores (Handlers)
 	savePetController := controllers.NewSavePetController(savePet)
 	deletePetController := controllers.NewDeletePetController(deletePet)
 	viewPetsController := controllers.NewViewPetsController(viewAllPets)
 	viewPetController := controllers.NewViewPetController(viewPet)
+	editPetController := controllers.NewEditPetController(editPet)
 
 	// Configurar rutas
-	SetupPetRoutes(router, savePetController, deletePetController, viewPetsController, viewPetController)
+	SetupPetRoutes(router, savePetController, deletePetController, viewPetsController, viewPetController, editPetController)
 
 }
